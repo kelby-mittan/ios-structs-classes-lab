@@ -289,10 +289,28 @@ F = 1.8 * C + 32
 K = C + 273
 
 a. Make a struct called `FreezingPoint` that has three static properties: `celsius`, `fahrenheit`, and `kelvin`. Give them all values equal to the freezing point of water.
-
+# Answer
+```swift
+struct FreezingPoint {
+    var celsius: Double = 0
+    var fahrenheit: Double = 32.0
+    var kelvin: Double = 273.2
+}
+```
 
 b. Make a struct called `Celsius` that has one property: `celsius`, and two methods `getFahrenheitTemp`, and `getKelvinTemp`. Make the values of `fahrenheit` and `kelvin` correct values, converted from the `celsius` property.
-
+# Answer 
+```swift
+struct Celsius {
+    let celsius: Double
+    func getFahrenheitTemp() {
+        print(celsius * 1.8 + 32)
+    }
+    func getKelvinTemp() {
+        print(celsius + 273)
+    }
+}
+```
 ```swift
 var tenDegreesCelsius = Celsius(celsius: 10.0)
 tenDegreesCelsius.celsius //returns 10.0
@@ -302,7 +320,21 @@ tenDegreesCelsius.getFahrenheitTemp() //returns 50.0
 
 c. Give the `Celsius` struct a method called `isBelowFreezing` that returns a `Bool` (true if the temperature is below freezing).
 
-
+# Answer
+```swift
+struct Celsius {
+    let celsius: Double
+    func isBelowFreezing() -> Bool {
+        var isLessThanZero = Bool()
+        if celsius < 0.0 {
+            isLessThanZero = true
+        } else {
+            isLessThanZero = false
+        }
+        return isLessThanZero
+    }
+}
+```
 ## Question 10
 
 Create a struct called `RGBColor` that has 3 properties, `red`, `green`, `blue` that are all of type `Double`.
@@ -317,7 +349,22 @@ let colorDictArray: [[String: Double]] = [["red": 1.0, "green": 0.0, "blue": 0.0
  ["red": 0.2, "green": 0.2, "blue": 0.5],
  ["red": 0.5, "green": 0.1, "blue": 0.9],]
 ```
-
+# Answer
+```swift
+func getRGB(dict: [[String: Any]]) -> [RGBColor] {
+    var rGBArray = [RGBColor]()
+    for element in dict {
+        for _ in element {
+            let red = element["red"] as? Double ?? 0
+            let green = element["green"] as? Double ?? 0
+            let blue = element["blue"] as? Double ?? 0
+            
+            rGBArray.append(RGBColor.init(red: red, green: green, blue: blue))
+        }
+    }
+    return rGBArray
+}
+```
 
 ## Question 11
 
