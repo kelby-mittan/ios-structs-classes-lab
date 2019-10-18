@@ -11,7 +11,7 @@ Given this class that represents a giant:
 class Giant {
  var name: String = "Fred"
  var weight: Double = 340.0
- let homePlanet: String = "Earth"
+ var homePlanet: String = "Earth"
 }
 
 let fred = Giant()
@@ -24,6 +24,8 @@ fred.name = "Brick"
 fred.weight = 999.2
 fred.homePlanet = "Mars"
 ```
+# Answer
+## The first two will run, but the third will not because homePlanet is stored as a constant "let homePlanet"
 
 Fix the class definition for `Giant` in the space below so that it **does** work:
 
@@ -38,11 +40,12 @@ struct Alien {
  var height: Double
  var homePlanet: String
 }
-let bilbo = Alien(name: "Bilbo", height: 1.67, homePlanet: "Venus")
+var bilbo = Alien(name: "Bilbo", height: 1.67, homePlanet: "Venus")
 ```
 
 Will these three lines of code run? If so, why not?
-
+# Answer
+## These three lines of code will not run because bilbo is set to a constant "let"
 ```swift
 bilbo.name = "Jake"
 bilbo.height = 1.42
@@ -64,7 +67,8 @@ jason.name = "Jason"
 ```
 
 What will the value of `edgar.name` be after those three lines of code are run? What will the value of `jason.name` be? Why?
-
+# Answer
+## The value of both will be "Jason" because jason is declared as edgar hence altering the reference when jason.name = "Jason" is called
 
 ## Question 4
 
@@ -77,7 +81,8 @@ charlesFromJupiter.homePlanet = "Jupiter"
 ```
 
 What will the value of `charles.homePlanet` be after the above code run? What about the value of `charlesFromJupiter.homePlanet`? Why?
-
+# Answer
+## Pluto, because the line var charlesFromJupiter = charles is only making a copy of charles.... not changing the original
 
 ## Question 5
 
@@ -88,18 +93,19 @@ struct BankAccount {
  var owner: String
  var balance: Double
 
- func deposit(_ amount: Double) {
- balance += amount
+ mutating func deposit(_ amount: Double) {
+    balance += amount
  }
 
- func withdraw(_ amount: Double) {
- balance -= amount
+ mutating func withdraw(_ amount: Double) {
+    balance -= amount
  }
 }
 ```
 
 Does this code work? Why or why not?
-
+# Answer
+## No, because the func needs to be preceded by mutating in order to modify its properties.
 Fix the `BankAccount` struct so it does work.
 
 Given the code below (which should incorporate any fixes you made):
@@ -120,7 +126,29 @@ a. Write a struct called `Person` that has 3 properties of type `String`: a firs
 
 b. Write a method in `Person` called `fullName` that will return a formatted string of an instance's full name. Call this method on both the instances you created in part a.
 
-
+# Answer to a & b
+```swift
+struct Person {
+    var firstName: String
+    var middleName: String?
+    var lastName: String
+    func fullName(full: Person) -> String {
+        var nameString = String()
+        if let mName = middleName {
+            nameString = full.firstName + " " + mName + " " + full.lastName
+        } else {
+            nameString = full.firstName + " " + full.lastName
+        }
+        print(nameString)
+        return nameString
+    }
+}
+let dFW = Person(firstName: "David", middleName: "Foster", lastName: "Wallace")
+let seanCarrol = Person(firstName: "Sean", lastName: "Carrol")
+print(dFW.firstName)
+dFW.fullName(full: dFW)
+seanCarrol.fullName(full: seanCarrol)
+```
 ## Question 7
 
 a. Create a struct called `Book` that has properties `title`, `author` and `rating`, of type `String`, `String`, and `Double` respectively. Create some instances of `Book`.
@@ -128,12 +156,67 @@ a. Create a struct called `Book` that has properties `title`, `author` and `rati
 
 b. Add a method to `Book` called `isGood` that returns `true` if its rating is greater than or equal to 7
 
+# Answer to a & b
+```swift
+struct Book {
+    var title: String
+    var author: String
+    var rating: Double
+    
+    func isGood() -> Bool {
+        var good = Bool()
+        if self.rating >= 7 {
+            good = true
+        } else {
+            good = false
+        }
+        return good
+    }
+}
+let infiniteJest = Book(title: "Infinite Jest", author: "David Foster Wallace", rating: 9.80)
+let elastic = Book(title: "Elastic", author: "Leonard Mlodinow", rating: 7.90)
+let dataclysm = Book(title: "Dataclysm", author: "Christian Rudder", rating: 6.70)
 
+infiniteJest.isGood()
+elastic.isGood()
+dataclysm.isGood()
+```
 ## Question 8
 
-```swift
-class Dog {
+# Answer to a,b,c,d,e
 
+```swift
+var count: Int = 0
+class Dog {
+    var name: String
+    var breed: String
+    var mood: String
+    var hungry: Bool
+    init(name: String, breed: String, mood: String, hungry: Bool) {
+        self.name = name
+        self.breed = breed
+        self.mood = mood
+        self.hungry = hungry
+        count += 1
+    }
+    func playFetch() {
+        self.mood = "playful"
+        self.hungry = true
+        print("Ruff!")
+    }
+    func feed() {
+        if self.hungry == true {
+            self.hungry = false
+            print("Woof")
+        } else {
+            print("The dog doesn't look hungry")
+        }
+    }
+    func toString() {
+        print("Name: \(self.name)")
+        print("Breed: \(self.breed)")
+        print("Mood: \(self.mood)")
+    }
 }
 ```
 
