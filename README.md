@@ -374,6 +374,24 @@ b. Create an instance method inside `Movie` called `blurb` that returns a format
 
 Ex: "Borat came out in 2006. It was an odd film starring Sacha Baron Cohen as a man named Borat who was visiting America from Kazakhstan."
 
+# Answer
+```swift
+struct Movie {
+    var name = String()
+    var year = Int()
+    var genre = String()
+    var cast = [String]()
+    var description = String()
+    
+    func blurb(someDescription: String) -> String {
+        var movieDescription = self.description
+        movieDescription = someDescription
+        return movieDescription
+    }
+}
+let someMovie = Movie()
+someMovie.blurb(someDescription: "Borat came out in 2006. It was an odd film starring Sacha Baron Cohen as a man named Borat who was visiting America from Kazakhstan.")
+```
 
 ## Question 12
 
@@ -414,7 +432,23 @@ if let yearAsString = dieHardDict["year"] as? String {
  print("this didn't work")
 }
 ```
-
+# Answer
+```swift
+let dieHardDict: [String: Any] = ["name": "Die Hard",
+ "year" : 1987,
+ "genre": "action",
+ "cast": ["Bruce Willis", "Alan Rickman"],
+ "description": "John Mclain saves the day!"]
+func makeMovie(movieDict: [String: Any]) -> Movie? {
+    let name = movieDict["name"] as? String ?? "unknown name"
+    let year = movieDict["year"] as? Int ?? 0
+    let genre = movieDict["genre"] as? String ?? "unknown genre"
+    let cast = [movieDict["cast"]] as? [String] ?? ["unknown cast"]
+    let description = movieDict["description"] as? String ?? "no description known"
+    let movie = Movie(name: name, year: year, genre: genre, cast: cast, description: description)
+    return movie
+}
+```
 ## Question 13
 
 Given the below array of movie dictionaries, use your function from the last question to create a `Array` of `Movie`.
