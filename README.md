@@ -443,7 +443,7 @@ func makeMovie(movieDict: [String: Any]) -> Movie? {
     let name = movieDict["name"] as? String ?? "unknown name"
     let year = movieDict["year"] as? Int ?? 0
     let genre = movieDict["genre"] as? String ?? "unknown genre"
-    let cast = [movieDict["cast"]] as? [String] ?? ["unknown cast"]
+    let cast = movieDict["cast"] as? [String] ?? ["unknown cast"]
     let description = movieDict["description"] as? String ?? "no description known"
     let movie = Movie(name: name, year: year, genre: genre, cast: cast, description: description)
     return movie
@@ -452,7 +452,17 @@ func makeMovie(movieDict: [String: Any]) -> Movie? {
 ## Question 13
 
 Given the below array of movie dictionaries, use your function from the last question to create a `Array` of `Movie`.
-
+# Answer
+```swift
+func movieArray(arrayOfMovieDict: [[String: Any]]) -> [Movie] {
+    var arrOfMovie = [Movie]()
+    for movieDict in arrayOfMovieDict {
+        arrOfMovie.append(makeMovie(movieDict: movieDict)!)
+    }
+    return arrOfMovie
+}
+print(movieArray(arrayOfMovieDict: movies))
+```
 ```swift
 // movies is an Array of Dictionaries
 // each element of movies is a Dictionary with the keys
@@ -523,3 +533,4 @@ var movies: [[String:Any]] = [
  ]
 ]
 ```
+
